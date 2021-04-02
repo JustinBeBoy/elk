@@ -14,9 +14,13 @@ services:
       - 5044:5044
     stdin_open: true
     tty: true
-    network_mode: bridge
+    network:
+      - logstash_elastic-network
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "50"
+networks:
+  logstash_elastic-network:
+    external: true

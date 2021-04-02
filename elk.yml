@@ -16,7 +16,8 @@ services:
       - 9300:9300
     stdin_open: true
     tty: true
-    network_mode: bridge
+    network:
+      - elastic-network
     logging:
       driver: "json-file"
       options:
@@ -37,9 +38,13 @@ services:
       - elasticsearch
     stdin_open: true
     tty: true
-    network_mode: bridge
+    network:
+      - elastic-network
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "50"
+networks:
+  elastic-network:
+    driver: bridge
