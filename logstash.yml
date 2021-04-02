@@ -14,13 +14,13 @@ services:
       - 5044:5044
     stdin_open: true
     tty: true
-    network:
-      - logstash_elastic-network
+    networks:
+      - elk_elastic-network
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "50"
 networks:
-  logstash_elastic-network:
+  elk_elastic-network:
     external: true
