@@ -14,7 +14,7 @@ services:
       - 5044:5044
     stdin_open: true
     tty: true
-    network:
+    networks:
       - logstash_elastic-network
     logging:
       driver: "json-file"
