@@ -15,7 +15,7 @@ services:
     stdin_open: true
     tty: true
     networks:
-      - logstash_elastic-network
+      - elk_elastic-network
     logging:
       driver: "json-file"
       options:
