@@ -2,7 +2,7 @@ filebeat.inputs:
 - type: log
   enabled: true
   paths:
-    - C:/Users/PC/.pm2/logs/*.log
+    - /usr/share/filebeat/log/*.log
 
 output.logstash:
   hosts: ["54.95.67.134:5044"]
