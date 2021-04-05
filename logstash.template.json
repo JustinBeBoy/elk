@@ -1,7 +1,7 @@
 {
-    "template": "motsv",
+    "template": "logstash",
     "index_patterns": [
-        "motsv-*"
+        "logstash-*"
     ],
     "settings": {
         "number_of_shards": 1
