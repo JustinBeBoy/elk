@@ -5,7 +5,7 @@ filebeat.inputs:
     - /usr/share/filebeat/log/*.log
 
 output.logstash:
-  hosts: ["54.95.67.134:5044"]
+  hosts: ["logstash:5044"]
 
 processors:
   - add_docker_metadata:
