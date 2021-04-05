@@ -9,7 +9,7 @@ services:
         hard: -1
     volumes:
       - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-      - ./logstash.template.json:/usr/share/logstash/templates/logstash.template.json
+      # - ./logstash.template.json:/usr/share/logstash/templates/logstash.template.json
     ports:
       - 5044:5044
     stdin_open: true
@@ -17,7 +17,7 @@ services:
     networks:
       - elk_elastic-network
     logging:
-      driver: "json-file"
+      # driver: "json-file"
       options:
         max-size: "10m"
         max-file: "50"
