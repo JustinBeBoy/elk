@@ -2,10 +2,10 @@ filebeat.inputs:
 - type: log
   enabled: true
   paths:
-    - /usr/share/filebeat/mylog/*.log
+    - C:/Users/PC/.pm2/logs/*.log
 
 output.logstash:
-  hosts: ["logstash:5044"]
+  hosts: ["54.95.67.134:5044"]
 
 processors:
   - add_docker_metadata:
