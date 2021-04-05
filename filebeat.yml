@@ -3,6 +3,7 @@ filebeat.inputs:
   enabled: true
   paths:
     - /usr/share/filebeat/log/*.log
+  encoding: utf-8
 
 output.logstash:
   hosts: ["54.95.67.134:5044"]
