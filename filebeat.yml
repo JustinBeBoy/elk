@@ -1,13 +1,12 @@
 filebeat.inputs:
-  - type: log
+- type: log
   enabled: true
   paths:
     - /usr/share/filebeat/log/*.log
 
 output.logstash:
- hosts:
-  - '54.95.67.134:5044'
+  hosts: ["54.95.67.134:5044"]
 
 processors:
   - add_docker_metadata:
-    host: 'unix:///host_docker/docker.sock'
+      host: "unix:///host_docker/docker.sock"
