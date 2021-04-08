@@ -1,12 +1,38 @@
 filebeat.inputs:
 - type: log
-  enabled: true
+  enabled: true # Use the enabled option to enable and disable inputs. By default, enabled is set to true
   paths:
     - /usr/share/filebeat/log/*.log
+  # A list of tags that Filebeat includes in the tags field of each published event
+  # Tags make it easy to select specific events in Kibana or apply conditional filtering in Logstash
+  # tags: ["json"] 
+  # can specify to add additional information to the output
+  # Fields can be scalar values, arrays, dictionaries, or any nested combination of these
+  # To store the custom fields as top-level fields, set the fields_under_root option to true
+  # fields:
+  #   app_id: query_engine_12
+  fields:
+    app_name: mot_app_api
+
+- type: log
+  enabled: true # Use the enabled option to enable and disable inputs. By default, enabled is set to true
+  paths:
+    - /usr/share/filebeat/log1/*.log
+  # A list of tags that Filebeat includes in the tags field of each published event
+  # Tags make it easy to select specific events in Kibana or apply conditional filtering in Logstash
+  # tags: ["json"] 
+  # can specify to add additional information to the output
+  # Fields can be scalar values, arrays, dictionaries, or any nested combination of these
+  # To store the custom fields as top-level fields, set the fields_under_root option to true
+  # fields:
+  #   app_id: query_engine_12
+  fields:
+    app_name: mot_app_api222
 
 output.logstash:
   hosts: ["54.95.67.134:5044"]
 
+# A list of processors to apply to the input data.
 processors:
   - add_docker_metadata:
       host: "unix:///host_docker/docker.sock"
