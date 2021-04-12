@@ -2,11 +2,15 @@ version: '3.3'
 services:
   elasticsearch:
     container_name: elasticsearch
-    image: elasticsearch:7.11.2
+    image: elasticsearch:$ELASTIC_VERSION
     environment:
       - bootstrap.memory_lock=true
       - discovery.type=single-node
+      - cluster.name=elasticsearch
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - cluster.routing.allocation.disk.threshold_enabled=false
+      - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
+      - xpack.security.enabled=$ELASTIC_SECURITY
     ulimits:
       memlock:
         soft: -1
@@ -26,6 +30,9 @@ services:
   kibana:
     container_name: kibana
     image: kibana:7.11.2
+    environment:
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=$ELASTIC_PASSWORD
     ulimits:
       memlock:
         soft: -1
