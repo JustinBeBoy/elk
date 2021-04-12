@@ -1,16 +1,51 @@
 version: '3.3'
 services:
-  elasticsearch:
-    container_name: elasticsearch
+  es01:
+    container_name: es01
     image: elasticsearch:$ELASTIC_VERSION
     environment:
+      - node.name=es01
       - bootstrap.memory_lock=true
-      - discovery.type=single-node
-      - cluster.name=elasticsearch
+      - discovery.seed_hosts=es02
+      - cluster.name=es-docker-cluster
+      - cluster.initial_master_nodes=es01,es02
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - cluster.routing.allocation.disk.threshold_enabled=false
       - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
       - xpack.security.enabled=$ELASTIC_SECURITY
+    volumes:
+      - data01:/usr/share/elasticsearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9200:9200
+      - 9300:9300
+    stdin_open: true
+    tty: true
+    networks:
+      - elastic-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "50"
+  es02:
+    container_name: es02
+    image: elasticsearch:$ELASTIC_VERSION
+    environment:
+      - node.name=es02
+      - bootstrap.memory_lock=true
+      - discovery.seed_hosts=es01
+      - cluster.name=es-docker-cluster
+      - cluster.initial_master_nodes=es01,es02
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - cluster.routing.allocation.disk.threshold_enabled=false
+      - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
+      - xpack.security.enabled=$ELASTIC_SECURITY
+    volumes:
+      - data02:/usr/share/elasticsearch/data
     ulimits:
       memlock:
         soft: -1
@@ -52,6 +87,13 @@ services:
       options:
         max-size: "10m"
         max-file: "50"
+
+volumes:
+  data01:
+    driver: local
+  data02:
+    driver: local
+
 networks:
   elastic-network:
     driver: bridge
