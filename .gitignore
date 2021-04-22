@@ -1,2 +1,5 @@
 .env
 extensions/
+kibana/config/kibana.yml
+logstash/config/logstash.yml
+logstash/pipeline/logstash.conf
