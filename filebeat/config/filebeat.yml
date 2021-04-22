@@ -1,0 +1,55 @@
+# filebeat.config:
+#   modules:
+#     path: ${path.config}/modules.d/*.yml
+#     reload.enabled: false
+
+# filebeat.autodiscover:
+#   providers:
+#     - type: docker
+#       hints.enabled: true
+
+# processors:
+# - add_cloud_metadata: ~
+
+filebeat.inputs:
+- type: log
+  # Use the enabled option to enable and disable inputs. By default, enabled is set to true
+  enabled: true
+  paths:
+    # Change path file log
+    - /usr/share/filebeat/log/*.log
+  # A list of tags that Filebeat includes in the tags field of each published event
+  # Tags make it easy to select specific events in Kibana or apply conditional filtering in Logstash
+  # tags: ["json"] 
+  # can specify to add additional information to the output
+  # Fields can be scalar values, arrays, dictionaries, or any nested combination of these
+  # To store the custom fields as top-level fields, set the fields_under_root option to true
+  # fields:
+  #   app_id: query_engine_12
+  fields:
+    app_name: changeme
+
+- type: log
+  # Use the enabled option to enable and disable inputs. By default, enabled is set to true
+  enabled: true
+  paths:
+    # Change path file log
+    - /usr/share/filebeat/log1/*.log
+  # A list of tags that Filebeat includes in the tags field of each published event
+  # Tags make it easy to select specific events in Kibana or apply conditional filtering in Logstash
+  # tags: ["json"] 
+  # can specify to add additional information to the output
+  # Fields can be scalar values, arrays, dictionaries, or any nested combination of these
+  # To store the custom fields as top-level fields, set the fields_under_root option to true
+  # fields:
+  #   app_id: query_engine_12
+  fields:
+    app_name: changeme
+
+output.logstash:
+  hosts: ["54.95.67.134:5044"]
+
+# output.elasticsearch:
+#   hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'
+#   username: '${ELASTICSEARCH_USERNAME:}'
+#   password: '${ELASTICSEARCH_PASSWORD:}'

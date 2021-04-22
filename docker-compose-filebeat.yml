@@ -1,0 +1,35 @@
+version: '3.3'
+services:
+  filebeat:
+    build:
+      context: filebeat/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    container_name: filebeat
+    user: root
+    command:
+        # Log to stderr.
+      #- -e
+        # Disable config file permissions checks. Allows mounting
+        # 'config/metricbeat.yml' even if it's not owned by root.
+        # see: https://www.elastic.co/guide/en/beats/libbeat/current/config-file-permissions.html
+      - --strict.perms=false
+        # Mount point of the host’s filesystem. Required to monitor the host
+        # from within a container.
+      # - --system.hostfs=/hostfs
+    volumes:
+      - type: bind
+        source: ./filebeat/config/filebeat.yml
+        target: /usr/share/filebeat/config/filebeat.yml
+        read_only: true
+      - type: volume
+        source: ./log
+        target: /usr/share/filebeat/log
+        read_only: true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    network_mode: bridge
+    deploy:
+      mode: global

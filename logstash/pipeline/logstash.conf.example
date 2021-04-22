@@ -1,0 +1,31 @@
+input {
+	beats {
+		port => 5044
+	}
+}
+
+filter {
+  grok {
+    match => { "message" => "%{TIME:timelog} %{WORD:loglevel} %{WORD:classname} %{WORD:userid} %{WORD:classmethod}" }
+  }
+  date{
+    match => ["timestamp", "UNIX_MS"]
+    target => "@timestamp"
+  }
+  ruby {
+    code => "event.set('indexService', event.get('[fields][app_name]'))"
+  }
+}
+
+output {
+	elasticsearch {
+		hosts => "elasticsearch:9200"
+		index => "%{indexService}"
+		user => "elastic"
+		password => "changeme"
+		ecs_compatibility => disabled
+	}
+	stdout {
+    codec => rubydebug
+  }
+}
