@@ -5,14 +5,15 @@ services:
       context: logstash/
       args:
         ELK_VERSION: $ELK_VERSION
+    container_name: logstash
     volumes:
       - type: bind
         source: ./logstash/config/logstash.yml
         target: /usr/share/logstash/config/logstash.yml
         read_only: true
       - type: bind
-        source: ./logstash/pipeline
-        target: /usr/share/logstash/pipeline
+        source: ./logstash/pipeline/logstash.conf
+        target: /usr/share/logstash/pipeline/logstash.conf
         read_only: true
     ports:
       - "5044:5044"
@@ -20,7 +21,7 @@ services:
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
-      - logstash_elk
+      - elk_elk
 networks:
-  logstash_elk:
+  elk_elk:
     external: true
