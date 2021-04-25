@@ -6,7 +6,7 @@ input {
 
 filter {
   grok {
-    match => { "message" => "%{TIME:timelog} %{WORD:loglevel} %{WORD:classname} %{WORD:userid} %{WORD:classmethod}" }
+    match => { "message" => "%{TIMESTAMP_ISO8601:timelog} %{WORD:loglevel} %{WORD:classname} %{WORD:userid} %{WORD:classmethod}" }
   }
   date{
     match => ["timestamp", "UNIX_MS"]
