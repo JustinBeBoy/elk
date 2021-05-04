@@ -1,0 +1,36 @@
+filebeat.autodiscover:
+  providers:
+    - type: docker
+      templates:
+        - condition:
+            contains:
+              docker.container.name: mot_api
+          config:
+            - type: container
+              paths:
+                - /var/lib/docker/containers/${data.docker.container.id}/*.log
+              fields:
+                app_name: stg_mot_api
+        - condition:
+            contains:
+              docker.container.name: qmr_sync
+          config:
+            - type: container
+              paths:
+                - /var/lib/docker/containers/${data.docker.container.id}/*.log
+              fields:
+                app_name: stg_qmr_sync
+        - condition:
+            contains:
+              docker.container.name: qmr_download
+          config:
+            - type: container
+              paths:
+                - /var/lib/docker/containers/${data.docker.container.id}/*.log
+              fields:
+                app_name: stg_qmr_download
+
+#output.console:
+#  pretty: true
+output.logstash:
+  hosts: ["54.95.67.134:5044"]

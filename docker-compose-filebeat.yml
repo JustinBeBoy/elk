@@ -22,10 +22,26 @@ services:
         source: ./filebeat/config/filebeat.yml
         target: /usr/share/filebeat/config/filebeat.yml
         read_only: true
-      - type: volume
-        source: ./log
-        target: /usr/share/filebeat/log
+      - type: bind
+        source: /var/run/docker.sock
+        target: /host_docker/docker.sock
         read_only: true
+      - type: bind
+        source: /var/lib/docker
+        target: /host_docker/var/lib/docker
+        read_only: true
+      # - type: bind
+      #   source: /home/ec2-user/.pm2/logs/ts-node-out.log
+      #   target: /usr/share/filebeat/api-log/ts-node-out.log
+      #   read_only: true
+      # - type: bind
+      #   source: /var/log/qmrd/qmr-app-out.log
+      #   target: /usr/share/filebeat/sync-log/qmr-app-out.log
+      #   read_only: true
+      # - type: bind
+      #   source: /var/log/qmrd/download-out.log
+      #   target: /usr/share/filebeat/download-log/download-out.log
+      #   read_only: true
     ulimits:
       memlock:
         soft: -1
