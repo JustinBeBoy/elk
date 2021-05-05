@@ -51,7 +51,7 @@ filebeat.inputs:
 #     - '8b6fe7dc9e067b58476dc57d6986dd96d7100430c5de3b109a99cd56ac655347'
 
 output.logstash:
-  hosts: ["54.95.67.134:5044"]
+  hosts: ["changeme"]
 
 # output.elasticsearch:
 #   hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'

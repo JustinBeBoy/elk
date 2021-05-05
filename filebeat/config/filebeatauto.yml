@@ -33,4 +33,4 @@ filebeat.autodiscover:
 #output.console:
 #  pretty: true
 output.logstash:
-  hosts: ["54.95.67.134:5044"]
+  hosts: ["changeme"]
